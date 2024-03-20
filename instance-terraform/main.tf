@@ -32,7 +32,7 @@ ingress = [
 }
 
 resource "aws_instance" "Web-Server" {
-  ami           = "ami-0cff7528ff583bf9a"
+  ami           = "ami-028a476f9c7c8a313"
   instance_type = "t3.medium"
   key_name      = "terra-key"
   vpc_security_group_ids = [aws_security_group.swiggy_ec2.id]
