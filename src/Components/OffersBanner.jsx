@@ -1,5 +1,5 @@
 import React from 'react'
-import './OfferBanner.css'
+import './OffersBanner.css'
 import banner2 from'../Photos/Banner2.png'
 import banner1 from'../Photos/Banner1.png'
 import banner3 from'../Photos/Banner3.png'
