@@ -23,10 +23,10 @@ jobs:
       - name: Docker build and push
         run: |
           # Run commands to build and push Docker images
-          docker build -t swiggy-clone .
-          docker tag swiggy-clone 08455/swiggy-clone:latest
+          #docker build -t swiggy-clone .
+          #docker tag swiggy-clone 08455/swiggy-clone:latest
           docker login -u ${{ secrets.Dockerhub_username }} -p ${{ secrets.Dockerhub_token }}
-          docker push 08455/swiggy-clone:latest
+          #docker push 08455/swiggy-clone:latest
         env:
           DOCKER_CLI_ACI: 1
   deploy:
@@ -34,8 +34,12 @@ jobs:
    runs-on: [self-hosted]
    steps:
       #- name: docker pull image
-        #run: docker pull 08455/swiggy-clone:latest
+      #  run: docker pull 08455/swiggy-clone:latest
       - name: Image scan
         run: trivy image 08455/swiggy-clone:latest > trivyimagedeploy.txt
       - name: Deploy to container
         run: docker run -d --name swiggy-clone -p 3000:3000 08455/swiggy-clone:latest
+      - name: Update kubeconfig
+        run: aws eks --region eu-north-1 update-kubeconfig --name EKS_CLOUD
+      - name: Deploy to kubernetes
+        run: kubectl apply -f deployment-service.yml #commit the changes and this will deploy the image locally on the base server
